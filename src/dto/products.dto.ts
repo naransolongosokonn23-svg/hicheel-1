@@ -1,6 +1,6 @@
 export class CreateProductDto {
     name: string;
-    description?: string;
+    description: string;
 
 }
 export class UpdateProductDto{

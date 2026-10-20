@@ -1,12 +1,32 @@
-import {Controller, Get} from '@nestjs/common';
-import {ProductsService} from './products.service.js';
+import { Controller, Get, Body, Delete, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { ProductsService } from './products.service.js';
+import { UpdateProductDto, CreateProductDto } from '../dto/products.dto.js';
 
 @Controller('products')
-export class ProductsController{
-    constructor(private readonly productsService: ProductsService){}
-
-    @Get('gethello')
-    gethello():string{
-        return this.productsService.gethello();
+export class ProductsController {
+constructor(private readonly productsService: ProductsService) {}
+@Post()
+    create(@Body() dto: CreateProductDto) {
+    return this.productsService.create(dto);
+    }
+@Get()
+    findAll() {
+    return this.productsService.findAll();
+    }
+    @Get(':id')
+    findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.findOne(id);
+    }
+    @Patch(':id')
+    update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateProductDto) {
+    return this.productsService.update(id, dto);
+    }
+    @Delete(':id')
+    remove(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.remove(id);
+    }
+    @Get('getHello')
+    getHello(): string {
+    return this.productsService.getHello();
     }
 }
